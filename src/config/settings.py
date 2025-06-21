@@ -1,0 +1,11 @@
+"""Configuration settings."""
+ALPHA = 0.1
+GAMMA = 0.95
+EPSILON = 0.1
+
+BASE_DEMAND = 50
+ELASTICITY = -1.0
+BASE_PRICE = 100
+COST = 60
+PRICE_GRID = [80, 90, 100, 110, 120]
+EPISODES = 100

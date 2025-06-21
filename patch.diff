@@ -1,0 +1,627 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000000000000000000000000000000000000..060df03d0cc264a09f02db5f1083e2a5244d4db5
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1,3 @@
++*.ipynb text
++*.csv text
++
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..de16fa6c1c7d9afa465a1270ac27086d23f9ce79
+--- /dev/null
++++ b/.github/workflows/ci.yml
+@@ -0,0 +1,24 @@
++name: CI
++
++on:
++  push:
++    branches: [ main ]
++  pull_request:
++    branches: [ main ]
++
++jobs:
++  build:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@v3
++      - name: Set up Python
++        uses: actions/setup-python@v4
++        with:
++          python-version: '3.9'
++      - name: Install dependencies
++        run: |
++          python -m pip install --upgrade pip
++          pip install -r requirements.txt
++          pip install -e .
++      - name: Run tests
++        run: pytest -q
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..47252b0c5efe3b9d3160194eaeb25700f2ca3ca3
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,56 @@
++# Byte-compiled / optimized / DLL files
++__pycache__/
++*.py[cod]
++*$py.class
++
++# C extensions
++*.so
++
++# Distribution / packaging
++.Python
++build/
++develop-eggs/
++dist/
++downloads/
++eggs/
++.eggs/
++lib/
++lib64/
++parts/
++var/
++sdist/
++venv/
++ENV/
++env/
++venv/
++ENV/
++
++# Jupyter Notebook checkpoints
++.ipynb_checkpoints
++
++# Unit test / coverage reports
++htmlcov/
++.tox/
++.nox/
++.coverage
++coverage.xml
++*,cover
++.hypothesis/
++.pytest_cache/
++
++# PyCharm
++.idea/
++
++# VSCode
++.vscode/
++
++# Mac OS
++.DS_Store
++
++# Logs
++*.log
++
++# Data
++/data/processed/
++/results/
++
+diff --git a/LICENSE b/LICENSE
+new file mode 100644
+index 0000000000000000000000000000000000000000..0038f59330405f7d814fc43a03992c48a2bde0cf
+--- /dev/null
++++ b/LICENSE
+@@ -0,0 +1,21 @@
++MIT License
++
++Copyright (c) 2024 Rahul Apte
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.
+diff --git a/README.md b/README.md
+index aa3dbe34e244962e825b12c2bd4659858050c347..67857ce0ed4aed065a6e959921d218f078177171 100644
+GIT binary patch
+literal 3248
+zcmcguO;a2<5WUZ@=-3w^%Ycb<aTQf2fU9s!f)_hEvf7#6T^Wruku<xWQ2y_EEzN!q
+z3Rg}!!Dw6RulHW}OS<T-YIH?oj!GN4@w(D>PD`!m<KYKZ-r}<;J}q=0&#enOI^R>}
+zEbMKdxM0#vYq(*YMC~joTZ^f8byw-BHahmysK{O`6KLjqy40$cJsljp_)ihgA)O&c
+zZE?LyzGxjBz4NN!mGk%M?Mu5*w&EJrOST=;wX$lSuDm!nplMHMZDis|%9ONsa(wc7
+zzbuNEFX^m{3+F>|NMp6=Ot#zmZ1s{o((cL4=<=(QWcOk8URkCK$MhW&x3F~E=(u>+
+zC^?>n=v5V;R9RJ(Yg%PB=RzxFpE5z2kzp>OlpDof>Kazc81$y*)P!0^g--m{X%Fk@
+zHeKP=0se{(Xz5!h=@a^xYKT(<FVgMZYMTKHsm4Bor5(W11%ZqJW@DvVgrurPiX$Z<
+zPiho>F0hG&gljEuQHER_b))~z=xG>Ts6%eauiVo+R<Xlvl>F*3(9jRbF9CNQ3)`jk
+z&PrCalET;ANQE*eSIXBk>ue>S<;C5Q=bJm+25p=@oO|ZFr(BX09<KbN0vnCqKbu0X
+z$8Du=df0!CLIG)^KtJ`wI3#c9BlJypQgM(9j#7|I9Xe%(YT)|&uI<4cvM%z}x%(g)
+zA$WL?Qg)UqhsdqKQ`iW&n?7jC?zZx}jlj;M)~l%zq@XA>J(tST%)4ew%0z}McmSAk
+z(v!(#s=}gZbxYDcLD`{SLn|XFevOZRXDSO^Os{?HbahX+QTbSmJ4ghDMjqKhkaE!^
+zftqKkGf^}q1(;%ZBX8v(dH}>y$hjT)&faaGDchb754qI=Bnb5CcoV_}$PmE#E0GY$
+z5dZ+b!P{`YQ8YGOML-Cmm^CcoZ&t-bh<rCS(?J>N)z72j<6~f(8}MkXR=LNOvNUCw
+zbtts9G!aKfUagL{4(<jA0skZqWfhi_l5Uv?`|;)3#r0*`)RT;!1olA4{}FUDTdosz
+zoN@EM_>-wY3Ct#Tg_b|ZX@mhxG+70nPy(3=)|PB~>RO~B=mB%00BNUh`8V<%P7|Uo
+z|LRhm>12(~q*&R_z{@omNryK@YSu+2>}ev}-SG7z?FsMJp9gelREVe<Wch&hZcskP
+zj7T==W1o(8zcLJ@-=32QV4R68brH&l()eLmG}?CZONc`><7|Gq_HjTtqJ4PVJBJ<I
+z4<{R_jX40nq4>S?I|vUH7H$QasrX2Cs)dI0Knp!z08Z;jU}v9~7yzmf=b>V&ymmm|
+zMZyNs0i(q|DGxDNVydS;;f9cFGW>cpp&DbMO4D4lVEBD2Gr%pvnQRV@CK+Yp?G|tw
+zeOHM%7lK%Me&&qa0{0R<MP=pXEK=Qc<FX`?_VuTTqqddlFt{ecR|rnDGPn-IKFzby
+zz=webnX>_>JK?1}+6r2s@5`+cW?`KGw=oP)cNViK9c+?H`$}41MEfMMG$US>kc=#O
+z!zfL9m-JKgq-zJ|tnRU9l*I`&017vOYJXRzCZfs^@uBYjW?fnQRASrU3J87j7$%ia
+zlJACQLiN&f=%>fDL@S<Xd|A9M=?~2UK&JHr*c^-lR1m}l7{gFlxBG%y1`=$ACZ#sR
+zFl`hY+0Q*un5$59qk&3HqI&0AF7dg}`(bf4quzB84uQ<0wGsmn8wAe5>kXcaTgjYD
+z(vhY>@fKr5SB4)HHaS_~>b%5`3Zkf^;nRozZ>jtyUR7EhPakBp91ZKEkP7SJC@+fg
+zl{P_qV=GLzz5w4C)~65e^FLCzr(0_>?XiBHK1i<Lif<dC`2f|kf%D!75&r@{LrBqt
+zbY4^Duyp+T>Jts-!+iO0b$<EV?d7AvGIR>dz1P!D_KV_t^C4UoO<A#lbn*{$lbhuL
+z5YPdR1J-TuwiO@<N<g^ni?ZOp!>{RBs5O!aA91|9Z$lg>Ue@nYn){aXzFl(NiTwNn
+DJlB5~
+
+literal 60
+zcmezWPnki1!G)ocA&()EA(tVOA(=s!A%LL>%*q6crUUtb3^@#`K=~pdA0o!fz{LOn
+Dpmhu6
+
+diff --git a/data/README.md b/data/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..e68c990988ffc37fa9dcaec228817ca25ceb95bc
+--- /dev/null
++++ b/data/README.md
+@@ -0,0 +1,9 @@
++# Data Directory
++
++This folder contains the raw and processed datasets used in the paper.
++
++- `raw/electronic_products_pricing.csv` - sample dataset of electronic products with prices, costs, and elasticity values.
++- `processed/` - folder for preprocessed data generated during experiments.
++
++Each row in the raw dataset represents a product with the following columns:
++`ProductID`, `Base_Price`, `Base_Demand`, `Elasticity`, and `Cost`.
+diff --git a/data/raw/electronic_products_pricing.csv b/data/raw/electronic_products_pricing.csv
+new file mode 100644
+index 0000000000000000000000000000000000000000..4382c15157996e48b1d369df18f38f3fd49b11e3
+--- /dev/null
++++ b/data/raw/electronic_products_pricing.csv
+@@ -0,0 +1,4 @@
++ProductID,Base_Price,Base_Demand,Elasticity,Cost
++1,100,50,-1.2,60
++2,150,40,-1.0,80
++3,200,30,-0.8,120
+diff --git a/docs/api_reference.md b/docs/api_reference.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..464ccbfe3d99a7550845112d98d316e5030dfd15
+--- /dev/null
++++ b/docs/api_reference.md
+@@ -0,0 +1,3 @@
++# API Reference
++
++Refer to docstrings in the source code for full API documentation.
+diff --git a/docs/installation.md b/docs/installation.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..d69dd45b42d2e1ec346740bf640d99e7d8c840d1
+--- /dev/null
++++ b/docs/installation.md
+@@ -0,0 +1,5 @@
++# Installation
++
++1. Clone the repository.
++2. Install dependencies with `pip install -r requirements.txt`.
++3. Install the package with `pip install -e .`.
+diff --git a/docs/usage.md b/docs/usage.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..b8faac7b40764dc3f3b21fb6a6801b4011070e6b
+--- /dev/null
++++ b/docs/usage.md
+@@ -0,0 +1,6 @@
++# Usage
++
++Run experiments using the provided scripts:
++```bash
++python scripts/run_experiment.py --episodes 100
++```
+diff --git a/notebooks/01_data_exploration.ipynb b/notebooks/01_data_exploration.ipynb
+new file mode 100644
+index 0000000000000000000000000000000000000000..883c4dc7d3a9aabfbd7dd4097e8930aef34a5b19
+--- /dev/null
++++ b/notebooks/01_data_exploration.ipynb
+@@ -0,0 +1 @@
++{"cells": [], "metadata": {}, "nbformat": 4, "nbformat_minor": 5}
+diff --git a/notebooks/02_q_learning_implementation.ipynb b/notebooks/02_q_learning_implementation.ipynb
+new file mode 100644
+index 0000000000000000000000000000000000000000..883c4dc7d3a9aabfbd7dd4097e8930aef34a5b19
+--- /dev/null
++++ b/notebooks/02_q_learning_implementation.ipynb
+@@ -0,0 +1 @@
++{"cells": [], "metadata": {}, "nbformat": 4, "nbformat_minor": 5}
+diff --git a/notebooks/03_traditional_optimization.ipynb b/notebooks/03_traditional_optimization.ipynb
+new file mode 100644
+index 0000000000000000000000000000000000000000..883c4dc7d3a9aabfbd7dd4097e8930aef34a5b19
+--- /dev/null
++++ b/notebooks/03_traditional_optimization.ipynb
+@@ -0,0 +1 @@
++{"cells": [], "metadata": {}, "nbformat": 4, "nbformat_minor": 5}
+diff --git a/notebooks/04_results_comparison.ipynb b/notebooks/04_results_comparison.ipynb
+new file mode 100644
+index 0000000000000000000000000000000000000000..883c4dc7d3a9aabfbd7dd4097e8930aef34a5b19
+--- /dev/null
++++ b/notebooks/04_results_comparison.ipynb
+@@ -0,0 +1 @@
++{"cells": [], "metadata": {}, "nbformat": 4, "nbformat_minor": 5}
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..95c434f9c037c85be08e3c927207da8bb2267f14
+--- /dev/null
++++ b/requirements.txt
+@@ -0,0 +1,8 @@
++numpy>=1.21.0
++pandas>=1.3.0
++matplotlib>=3.4.0
++seaborn>=0.11.0
++scipy>=1.7.0
++jupyter>=1.0.0
++pytest>=6.0.0
++scikit-learn>=1.0.0
+diff --git a/scripts/create_plots.py b/scripts/create_plots.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..f0d477aededf99afd6a930f1e66b36e4c2630746
+--- /dev/null
++++ b/scripts/create_plots.py
+@@ -0,0 +1,14 @@
++"""Create visualizations from results."""
++from pathlib import Path
++import pandas as pd
++from src.utils.visualization import plot_revenue_curve
++
++
++def main():
++    df = pd.read_csv(Path('data/raw/electronic_products_pricing.csv'))
++    prices = df['Base_Price']
++    revenues = (df['Base_Price'] - df['Cost']) * df['Base_Demand']
++    plot_revenue_curve(prices, revenues, Path('results/figures/revenue_curve.png'))
++
++if __name__ == "__main__":
++    main()
+diff --git a/scripts/generate_results.py b/scripts/generate_results.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..c9becc700f404a398300f0b5f191ff977a19ec2b
+--- /dev/null
++++ b/scripts/generate_results.py
+@@ -0,0 +1,37 @@
++"""Generate tables and figures."""
++import numpy as np
++from pathlib import Path
++from src.environment.pricing_environment import Product, PricingEnvironment
++from src.agents.q_learning_agent import QLearningAgent
++from src.traditional.scipy_optimizer import ProductParams, optimize_price
++from src.utils.visualization import plot_revenue_curve
++from src.config import settings
++
++
++def main():
++    product = Product(
++        base_price=settings.BASE_PRICE,
++        base_demand=settings.BASE_DEMAND,
++        elasticity=settings.ELASTICITY,
++        cost=settings.COST,
++    )
++    env = PricingEnvironment(product, price_grid=np.array(settings.PRICE_GRID))
++    agent = QLearningAgent(env.action_space, settings.ALPHA, settings.GAMMA, settings.EPSILON)
++    for _ in range(settings.EPISODES):
++        agent.train_episode(env)
++
++    prices = np.array(settings.PRICE_GRID)
++    revenues = [(p - settings.COST) * product.base_demand for p in prices]
++    plot_revenue_curve(prices, revenues, Path('results/figures/revenue_curve.png'))
++
++    params = ProductParams(
++        base_price=settings.BASE_PRICE,
++        base_demand=settings.BASE_DEMAND,
++        elasticity=settings.ELASTICITY,
++        cost=settings.COST,
++    )
++    optimal_price = optimize_price(params, (min(prices), max(prices)))
++    print(f"Optimal price via scipy: {optimal_price}")
++
++if __name__ == "__main__":
++    main()
+diff --git a/scripts/run_experiment.py b/scripts/run_experiment.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..98b755c0d7c6f63843549d493b81b95e2cdfb751
+--- /dev/null
++++ b/scripts/run_experiment.py
+@@ -0,0 +1,24 @@
++"""Run a full training experiment."""
++import numpy as np
++from src.environment.pricing_environment import Product, PricingEnvironment
++from src.agents.q_learning_agent import QLearningAgent
++from src.config import settings
++
++
++def main(episodes: int = settings.EPISODES):
++    product = Product(
++        base_price=settings.BASE_PRICE,
++        base_demand=settings.BASE_DEMAND,
++        elasticity=settings.ELASTICITY,
++        cost=settings.COST,
++    )
++    env = PricingEnvironment(product, price_grid=np.array(settings.PRICE_GRID))
++    agent = QLearningAgent(env.action_space, settings.ALPHA, settings.GAMMA, settings.EPSILON)
++
++    for _ in range(episodes):
++        agent.train_episode(env)
++
++    print("Training complete")
++
++if __name__ == "__main__":
++    main()
+diff --git a/setup.py b/setup.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..823a046391019172800e23fba3f2f60677c860ad
+--- /dev/null
++++ b/setup.py
+@@ -0,0 +1,16 @@
++from setuptools import setup, find_packages
++
++setup(
++    name='dynamic_retail_pricing_qlearning',
++    version='0.1.0',
++    packages=find_packages('src'),
++    package_dir={'': 'src'},
++    install_requires=[
++        'numpy>=1.21.0',
++        'pandas>=1.3.0',
++        'matplotlib>=3.4.0',
++        'seaborn>=0.11.0',
++        'scipy>=1.7.0',
++        'scikit-learn>=1.0.0'
++    ],
++)
+diff --git a/src/__init__.py b/src/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/agents/__init__.py b/src/agents/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/agents/q_learning_agent.py b/src/agents/q_learning_agent.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..f11b17f68fb895c533041c6fc47522078699557f
+--- /dev/null
++++ b/src/agents/q_learning_agent.py
+@@ -0,0 +1,38 @@
++"""Q-learning agent for dynamic pricing."""
++from typing import Tuple
++import numpy as np
++from . import __init__
++
++class QLearningAgent:
++    def __init__(self, actions: np.ndarray, alpha: float = 0.1, gamma: float = 0.95, epsilon: float = 0.1):
++        self.actions = actions
++        self.alpha = alpha
++        self.gamma = gamma
++        self.epsilon = epsilon
++        self.q_table = {}
++
++    def get_q(self, state: Tuple[str, float], action: float) -> float:
++        return self.q_table.get((state, action), 0.0)
++
++    def choose_action(self, state: Tuple[str, float]) -> float:
++        if np.random.rand() < self.epsilon:
++            return np.random.choice(self.actions)
++        qs = [self.get_q(state, a) for a in self.actions]
++        return float(self.actions[int(np.argmax(qs))])
++
++    def learn(self, state: Tuple[str, float], action: float, reward: float, next_state: Tuple[str, float]):
++        current_q = self.get_q(state, action)
++        max_next_q = max([self.get_q(next_state, a) for a in self.actions])
++        new_q = current_q + self.alpha * (reward + self.gamma * max_next_q - current_q)
++        self.q_table[(state, action)] = new_q
++
++    def train_episode(self, env) -> float:
++        state = env.reset()
++        total_reward = 0.0
++        for _ in range(len(env.action_space)):
++            action = self.choose_action(state)
++            next_state, reward = env.step(action)
++            self.learn(state, action, reward, next_state)
++            state = next_state
++            total_reward += reward
++        return total_reward
+diff --git a/src/config/__init__.py b/src/config/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/config/settings.py b/src/config/settings.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..f9f8df4415d1f15e8f314109a2990428037c8dd0
+--- /dev/null
++++ b/src/config/settings.py
+@@ -0,0 +1,11 @@
++"""Configuration settings."""
++ALPHA = 0.1
++GAMMA = 0.95
++EPSILON = 0.1
++
++BASE_DEMAND = 50
++ELASTICITY = -1.0
++BASE_PRICE = 100
++COST = 60
++PRICE_GRID = [80, 90, 100, 110, 120]
++EPISODES = 100
+diff --git a/src/environment/__init__.py b/src/environment/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/environment/pricing_environment.py b/src/environment/pricing_environment.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..d24ca0c0b46a7be7dc360bb8818a46ecda1a315e
+--- /dev/null
++++ b/src/environment/pricing_environment.py
+@@ -0,0 +1,39 @@
++"""Retail pricing simulation environment."""
++from dataclasses import dataclass
++from typing import Tuple
++import numpy as np
++
++@dataclass
++class Product:
++    base_price: float
++    base_demand: float
++    elasticity: float
++    cost: float
++
++class PricingEnvironment:
++    """Environment for dynamic pricing."""
++    def __init__(self, product: Product, price_grid: np.ndarray):
++        self.product = product
++        self.price_grid = price_grid
++        self.state_space = ['weekday', 'weekend']
++        self.action_space = price_grid
++        self.day = 0
++
++    def reset(self) -> Tuple[str, float]:
++        self.day = 0
++        return self.current_state()
++
++    def step(self, price: float) -> Tuple[Tuple[str, float], float]:
++        demand = self._demand(price)
++        reward = (price - self.product.cost) * demand
++        self.day = (self.day + 1) % 7
++        return self.current_state(), reward
++
++    def current_state(self) -> Tuple[str, float]:
++        day_type = 'weekend' if self.day in [5, 6] else 'weekday'
++        return day_type, self.product.base_price
++
++    def _demand(self, price: float) -> float:
++        p = self.product
++        demand = p.base_demand + (p.base_demand * p.elasticity * (price - p.base_price) / p.base_price)
++        return max(demand, 0.0)
+diff --git a/src/traditional/__init__.py b/src/traditional/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/traditional/scipy_optimizer.py b/src/traditional/scipy_optimizer.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..3eaec282df2c5520e13267e620dc17d5075e0b06
+--- /dev/null
++++ b/src/traditional/scipy_optimizer.py
+@@ -0,0 +1,32 @@
++"""Traditional optimization using SciPy."""
++from dataclasses import dataclass
++import numpy as np
++from scipy.optimize import minimize
++
++@dataclass
++class ProductParams:
++    base_price: float
++    base_demand: float
++    elasticity: float
++    cost: float
++
++
++def demand(price: float, params: ProductParams) -> float:
++    d = params.base_demand + (
++        params.base_demand * params.elasticity * (price - params.base_price) / params.base_price
++    )
++    return max(d, 0.0)
++
++
++def revenue(price: float, params: ProductParams) -> float:
++    d = demand(price, params)
++    return (price - params.cost) * d
++
++
++def optimize_price(params: ProductParams, price_bounds: tuple) -> float:
++    result = minimize(
++        lambda p: -revenue(p[0], params),
++        x0=[params.base_price],
++        bounds=[price_bounds],
++    )
++    return float(result.x[0])
+diff --git a/src/utils/__init__.py b/src/utils/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/src/utils/data_loader.py b/src/utils/data_loader.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..0a3bcb46147e82f8c5584e88575e6e2a4ec04ce6
+--- /dev/null
++++ b/src/utils/data_loader.py
+@@ -0,0 +1,8 @@
++"""Data loading utilities."""
++import pandas as pd
++from pathlib import Path
++
++
++def load_raw_data(path: Path) -> pd.DataFrame:
++    """Load raw electronic products data."""
++    return pd.read_csv(path)
+diff --git a/src/utils/visualization.py b/src/utils/visualization.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..f603009d9117785fdebac6bfd9aee18fe0220fd7
+--- /dev/null
++++ b/src/utils/visualization.py
+@@ -0,0 +1,12 @@
++"""Visualization utilities."""
++import matplotlib.pyplot as plt
++
++
++def plot_revenue_curve(prices, revenues, path):
++    plt.figure()
++    plt.plot(prices, revenues, marker='o')
++    plt.xlabel('Price')
++    plt.ylabel('Revenue')
++    plt.title('Revenue Curve')
++    plt.savefig(path)
++    plt.close()
+diff --git a/tests/__init__.py b/tests/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/tests/test_agent.py b/tests/test_agent.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..c1db340213c40770f3cc19d2a4844f8d7a04ed32
+--- /dev/null
++++ b/tests/test_agent.py
+@@ -0,0 +1,11 @@
++import numpy as np
++from src.environment.pricing_environment import Product, PricingEnvironment
++from src.agents.q_learning_agent import QLearningAgent
++
++
++def test_agent_learns():
++    product = Product(base_price=100, base_demand=50, elasticity=-1.0, cost=60)
++    env = PricingEnvironment(product, price_grid=np.array([90, 100, 110]))
++    agent = QLearningAgent(env.action_space)
++    reward = agent.train_episode(env)
++    assert isinstance(reward, float)
+diff --git a/tests/test_environment.py b/tests/test_environment.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..7d2eb9d09ce899beecb7d8dab8e1722a0e31d085
+--- /dev/null
++++ b/tests/test_environment.py
+@@ -0,0 +1,9 @@
++import numpy as np
++from src.environment.pricing_environment import Product, PricingEnvironment
++
++
++def test_demand_positive():
++    product = Product(base_price=100, base_demand=50, elasticity=-1.0, cost=60)
++    env = PricingEnvironment(product, price_grid=np.array([100]))
++    _, reward = env.step(100)
++    assert reward >= 0
+diff --git a/tests/test_optimizer.py b/tests/test_optimizer.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..8f7daa3cc3f0836a6865d3cd38b112fb969dd828
+--- /dev/null
++++ b/tests/test_optimizer.py
+@@ -0,0 +1,7 @@
++from src.traditional.scipy_optimizer import ProductParams, optimize_price
++
++
++def test_optimize_price():
++    params = ProductParams(base_price=100, base_demand=50, elasticity=-1.0, cost=60)
++    price = optimize_price(params, (80, 120))
++    assert 80 <= price <= 120
+ 
+EOF
+)

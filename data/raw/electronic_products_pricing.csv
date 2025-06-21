@@ -1,0 +1,4 @@
+ProductID,Base_Price,Base_Demand,Elasticity,Cost
+1,100,50,-1.2,60
+2,150,40,-1.0,80
+3,200,30,-0.8,120
