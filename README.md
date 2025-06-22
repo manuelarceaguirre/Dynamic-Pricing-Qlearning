@@ -114,8 +114,6 @@ This replication attempt focused on implementing the core components described i
 
 **Reinforcement Learning Optimized Prices & Profit:**
 ```
-<!-- PASTE YOUR LATEST RL TABLE (INCLUDING PROFIT) HERE -->
-<!-- Example based on your last provided output: -->
 ==================== Reinforcement Learning Optimized Prices & Profit ====================
       Product Name        Optimal Price  Optimal Demand  Est. Profit
           Samsung 24” HD     147.42           66.00        8432.42
@@ -136,8 +134,6 @@ Samsung 24” HD UN24H4500     122.72           50.64        4913.90
 
 **Traditional Optimization with SciPy & Profit:**
 ```
-<!-- PASTE YOUR LATEST SCIPY TABLE (INCLUDING PROFIT) HERE -->
-<!-- Example based on your last provided output: -->
 ==================== Traditional Optimization with SciPy & Profit ====================
       Product Name        Optimal Price  Optimal Demand  Est. Profit
           Samsung 24” HD     173.63           56.40        8684.02
@@ -155,11 +151,6 @@ Samsung 24” HD UN24H4500     121.75           51.16        4914.41
            VIZIO 39” FHD     216.77           73.04       12549.12
        VIZIO 70” 4K XHDR     867.00          113.94       72124.02
 ```
-
-## Future Work / Potential Extensions for this Replication
--   Further systematic exploration of the hyperparameter space for the Q-learning agent.
--   Implement a version of the `PricingEnvironment` with stochastic or dynamic changes to `base_demand` or `elasticity` to more closely investigate RL's adaptability as suggested by the paper.
--   If more details about the original paper's cost structure or traditional optimization setup become available, refine the replication accordingly.
 
 ## Repository Structure
 -   `src/`: Contains the Python source code for the environment, agent, and optimizer.
@@ -187,13 +178,3 @@ See `requirements.txt`. Key dependencies include:
 }
 ```
 
-## License for this Replication Code
-This project is licensed under the MIT License. See `LICENSE` for details.
-```
-
-**To use this:**
-1.  **Replace the `<!-- PASTE ... -->` blocks with the actual console output of your tables** from the last run (the one with 18% cost and profits included). Make sure they are formatted nicely (they should be, as they come from Pandas `to_string()`).
-2.  Read through the "Current Replication Status & Results Summary" and "Key Findings" and adjust the narrative to perfectly match your final understanding and the specific numbers you're presenting.
-3.  Fill in any other minor details (like specific versions of major libraries if you think it's relevant, though `requirements.txt` should cover that).
-
-This provides a comprehensive document of your replication journey.
