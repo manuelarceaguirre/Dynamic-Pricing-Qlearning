@@ -1,8 +1,3 @@
-Okay, here's the updated `README.md` incorporating the structure for documenting your replication attempt, using placeholders for where your latest tables would go. I've removed contact information and kept it focused on the technical aspects of the replication.
-
-Remember to replace the placeholder comments like `<!-- PASTE YOUR RL TABLE HERE -->` with your actual output once you have a set of results you want to document.
-
-```markdown
 # Dynamic Retail Pricing via Q-Learning - A Replication Attempt
 
 This repository contains an attempt to implement and reproduce the experiments from the paper **"Dynamic Retail Pricing via Q-Learning - A Reinforcement Learning Framework for Enhanced Revenue Management"** by Apte et al. (arXiv:2411.18261v1).
@@ -176,5 +171,5 @@ See `requirements.txt`. Key dependencies include:
       primaryClass={cs.LG},
       license={CC BY 4.0}
 }
-```
+
 
